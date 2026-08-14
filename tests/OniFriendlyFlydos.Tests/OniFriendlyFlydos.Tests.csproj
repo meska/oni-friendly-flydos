@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <Compile Include="../../src/OniFriendlyFlydos/BatteryPolicy.cs" Link="BatteryPolicy.cs" />
+    <Compile Include="../../src/OniFriendlyFlydos/CheckboxPolicy.cs" Link="CheckboxPolicy.cs" />
     <Compile Include="../../src/OniFriendlyFlydos/ProductionPolicy.cs" Link="ProductionPolicy.cs" />
   </ItemGroup>
 </Project>

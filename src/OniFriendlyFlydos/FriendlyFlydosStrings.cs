@@ -30,7 +30,9 @@ namespace OniFriendlyFlydos
                         + "Disable this when a Flydo must cross water.";
 
                 public static LocString Status
-                    = "Living: {0} / Effective target: {1}\nQueued on this asteroid: {2} • This station: {3} • Stations: {4}";
+                    = "Living: {0} / Effective target: {1}\n"
+                        + "Queued: asteroid {2} • this station {3}\n"
+                        + "Participating stations: {4}";
 
                 public static LocString InvalidTarget = "Enter a whole number from 0 to 99.";
             }

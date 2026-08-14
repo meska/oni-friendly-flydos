@@ -123,9 +123,8 @@ namespace OniFriendlyFlydos
         {
             if (!refreshing)
             {
-                controller?.SetEnabled(checkState == PCheckBox.STATE_CHECKED);
-                SetTargetFieldEnabled();
-                RefreshStatus();
+                controller?.SetEnabled(CheckboxPolicy.GetValueAfterClick(checkState));
+                Refresh();
             }
         }
 
@@ -155,7 +154,8 @@ namespace OniFriendlyFlydos
         {
             if (!refreshing)
             {
-                controller?.SetAvoidWater(checkState == PCheckBox.STATE_CHECKED);
+                controller?.SetAvoidWater(CheckboxPolicy.GetValueAfterClick(checkState));
+                Refresh();
             }
         }
 

@@ -9,6 +9,7 @@
 
 ### Fixed
 
+- Corrected PLib checkbox callbacks so station options actually toggle, and shortened the status rows so the custom panel no longer widens the vanilla tabs.
 - Made the Soldering Station labels visible on its light background and expanded checkbox rows to a reliable clickable width.
 - Kept ONI's asynchronous path-prober classification stable when applying a Flydo water policy, preventing a repeating `KeyNotFoundException` after colony load.
 
