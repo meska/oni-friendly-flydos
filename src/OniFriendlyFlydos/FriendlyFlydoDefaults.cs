@@ -41,8 +41,16 @@ namespace OniFriendlyFlydos
                 }
             }
 
+            var filter = flydo.GetComponent<TreeFilterable>();
+            if (filter == null)
+            {
+                return;
+            }
+
+            // No zontar de nascosto una batteria atomica scoperta dopo questo momento.
+            filter.preventAutoAddOnDiscovery = true;
             // UpdateFilters sveglia anche la ManualDeliveryKG vanilla col filtro giusto.
-            flydo.GetComponent<TreeFilterable>()?.UpdateFilters(accepted);
+            filter.UpdateFilters(accepted);
         }
     }
 }

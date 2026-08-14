@@ -8,6 +8,33 @@ namespace OniFriendlyFlydos
     [SerializationConfig(MemberSerialization.OptIn)]
     public sealed class FriendlyFlydoFactoryController : KMonoBehaviour, ISaveLoadable, ISim1000ms
     {
+        internal readonly struct ProductionSnapshot
+        {
+            internal ProductionSnapshot(
+                int living,
+                int effectiveTarget,
+                int queuedGlobally,
+                int queuedHere,
+                int participatingStations)
+            {
+                Living = living;
+                EffectiveTarget = effectiveTarget;
+                QueuedGlobally = queuedGlobally;
+                QueuedHere = queuedHere;
+                ParticipatingStations = participatingStations;
+            }
+
+            internal int Living { get; }
+
+            internal int EffectiveTarget { get; }
+
+            internal int QueuedGlobally { get; }
+
+            internal int QueuedHere { get; }
+
+            internal int ParticipatingStations { get; }
+        }
+
         private static readonly HashSet<FriendlyFlydoFactoryController> Controllers
             = new HashSet<FriendlyFlydoFactoryController>();
 
@@ -83,6 +110,25 @@ namespace OniFriendlyFlydos
         {
             return GetFlydoRecipes()
                 .Sum(recipe => NormalizeQueueCount(fabricator.GetRecipeQueueCount(recipe)));
+        }
+
+        internal ProductionSnapshot GetProductionSnapshot()
+        {
+            var worldId = gameObject.GetMyWorldId();
+            var participating = Controllers
+                .Where(candidate => candidate != null
+                    && candidate.isSpawned
+                    && candidate.automaticProductionEnabled
+                    && candidate.gameObject.GetMyWorldId() == worldId)
+                .ToList();
+            return new ProductionSnapshot(
+                CountLiveFlydos(worldId),
+                participating.Count == 0
+                    ? 0
+                    : participating.Max(candidate => candidate.targetCount),
+                participating.Sum(candidate => candidate.GetManagedQueueCount()),
+                GetManagedQueueCount(),
+                participating.Count);
         }
 
         private void Reconcile(bool force)

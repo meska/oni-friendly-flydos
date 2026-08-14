@@ -13,6 +13,7 @@ namespace OniFriendlyFlydos
         {
             base.OnLoad(harmony);
             PUtil.InitLibrary();
+            Localization.RegisterForTranslation(typeof(FriendlyFlydosStrings));
             new POptions().RegisterOptions(this, typeof(FriendlyFlydosConfig));
             FriendlyFlydosSettings.Configure(
                 POptions.ReadSettings<FriendlyFlydosConfig>() ?? new FriendlyFlydosConfig());
