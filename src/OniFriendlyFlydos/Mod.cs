@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using HarmonyLib;
 using KMod;
 using PeterHan.PLib.Core;
@@ -26,10 +27,8 @@ namespace OniFriendlyFlydos
     {
         private static void Postfix(Pathfinding pathfinding)
         {
-            if (FriendlyFlydosSettings.Current.AvoidWater)
-            {
-                WaterAvoidanceNavigation.Register(pathfinding);
-            }
+            // La griglia resta disponibile: ogni stazion decide chi che la usa.
+            WaterAvoidanceNavigation.Register(pathfinding);
         }
     }
 
@@ -41,14 +40,6 @@ namespace OniFriendlyFlydos
             __result.AddOrGet<FriendlyFlydoState>();
             __result.AddOrGet<Prioritizable>();
             __result.AddTag(GameTags.IndustrialProduct);
-
-            if (FriendlyFlydosSettings.Current.AvoidWater)
-            {
-                // Niente Swim nella griglia; se el save lo carica in acqua, almeno no more.
-                __result.GetComponent<Navigator>().NavGridName = WaterAvoidanceNavigation.GridId;
-                __result.RemoveDef<SubmergedMonitor.Def>();
-                __result.GetComponent<DrowningMonitor>().canDrownToDeath = false;
-            }
         }
     }
 
@@ -58,6 +49,28 @@ namespace OniFriendlyFlydos
         private static void Postfix(FetchDrone __instance)
         {
             FriendlyFlydoDefaults.Apply(__instance.gameObject);
+            FriendlyFlydoWaterPolicy.ApplySaved(__instance.gameObject);
+        }
+    }
+
+    [HarmonyPatch(typeof(ComplexFabricator), "SpawnOrderProduct")]
+    internal static class ComplexFabricatorSpawnOrderProductPatch
+    {
+        private static void Postfix(ComplexFabricator __instance, List<GameObject> __result)
+        {
+            var controller = __instance.GetComponent<FriendlyFlydoFactoryController>();
+            if (controller == null || __result == null)
+            {
+                return;
+            }
+
+            foreach (var product in __result)
+            {
+                if (product?.GetComponent<KPrefabID>()?.PrefabTag == FetchDroneConfig.ID.ToTag())
+                {
+                    FriendlyFlydoWaterPolicy.Apply(product, controller.AvoidWater);
+                }
+            }
         }
     }
 

@@ -23,6 +23,12 @@ namespace OniFriendlyFlydos
 
                 public static LocString TargetInputTooltip = "Accepted range: 0 to 99.";
 
+                public static LocString AvoidWater = "Keep Flydos out of water";
+
+                public static LocString AvoidWaterTooltip
+                    = "Flydos produced by this station avoid swimming routes and cannot drown. "
+                        + "Disable this when a Flydo must cross water.";
+
                 public static LocString Status
                     = "Living: {0} / Effective target: {1}\nQueued on this asteroid: {2} • This station: {3} • Stations: {4}";
 

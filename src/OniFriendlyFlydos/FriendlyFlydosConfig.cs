@@ -30,13 +30,6 @@ namespace OniFriendlyFlydos
         [JsonProperty]
         public int BatteryDeliveryPriority { get; set; } = 7;
 
-        [Option(
-            "Avoid water",
-            "Uses a Flydo-only navigation grid with no swimming routes. A waterproof safety net also prevents drowning if a Flydo starts inside liquid.",
-            "Navigation")]
-        [JsonProperty]
-        public bool AvoidWater { get; set; } = true;
-
         public IEnumerable<IOptionsEntry> CreateOptions()
         {
             // Nessuna riga custom: POptions genera tuto dai attributi qua sora.
@@ -45,7 +38,7 @@ namespace OniFriendlyFlydos
 
         public void OnOptionsChanged()
         {
-            // I default nuovi vale subito; la griglia acqua richiede un riavvio del zogo.
+            // I default novi vale subito par i prossimi Flydo.
             FriendlyFlydosSettings.Configure(this);
         }
     }

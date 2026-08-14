@@ -1,7 +1,7 @@
 #!/bin/zsh
 set -euo pipefail
 
-project_dir=${0:A:h}
+project_dir="$(cd -- "$(dirname -- "$0")" && pwd)"
 mod_dir="$HOME/Library/Application Support/unity.Klei.Oxygen Not Included/mods/Local/OniFriendlyFlydos"
 dll_path="$project_dir/src/OniFriendlyFlydos/bin/Release/net48/OniFriendlyFlydos.dll"
 
