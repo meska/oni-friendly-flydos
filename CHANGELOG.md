@@ -9,6 +9,7 @@
 
 ### Fixed
 
+- Made the Soldering Station labels visible on its light background and expanded checkbox rows to a reliable clickable width.
 - Kept ONI's asynchronous path-prober classification stable when applying a Flydo water policy, preventing a repeating `KeyNotFoundException` after colony load.
 
 ## 0.1.0

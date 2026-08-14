@@ -34,21 +34,29 @@ namespace OniFriendlyFlydos
             {
                 Direction = PanelDirection.Vertical,
                 Alignment = TextAnchor.UpperLeft,
+                FlexSize = new Vector2(1f, 0f),
                 Margin = new RectOffset(8, 8, 8, 8),
                 Spacing = 8
             };
-            panel.AddChild(
-                new PCheckBox("MaintainMinimum")
-                {
-                    Text = FriendlyFlydosStrings.UI.FactorySideScreen.Participate,
-                    ToolTip = FriendlyFlydosStrings.UI.FactorySideScreen.ParticipateTooltip,
-                    CheckSize = new Vector2(20f, 20f),
-                    OnChecked = OnEnabledChanged
-                }.SetKleiPinkStyle().AddOnRealize(realized => enabledCheckbox = realized));
+            var maintainMinimum = new PCheckBox("MaintainMinimum")
+            {
+                Text = FriendlyFlydosStrings.UI.FactorySideScreen.Participate,
+                ToolTip = FriendlyFlydosStrings.UI.FactorySideScreen.ParticipateTooltip,
+                CheckSize = new Vector2(20f, 20f),
+                FlexSize = new Vector2(1f, 0f),
+                TextAlignment = TextAnchor.MiddleLeft,
+                OnChecked = OnEnabledChanged
+            }.SetKleiPinkStyle();
+            // El fondo del pannello xe ciaro: dopo el preset rosa va ripristinato el testo scuro.
+            maintainMinimum.TextStyle = PUITuning.Fonts.UIDarkStyle;
+            panel.AddChild(maintainMinimum.AddOnRealize(realized => enabledCheckbox = realized));
             panel.AddChild(new PLabel("TargetLabel")
             {
                 Text = FriendlyFlydosStrings.UI.FactorySideScreen.Target,
-                ToolTip = FriendlyFlydosStrings.UI.FactorySideScreen.TargetTooltip
+                ToolTip = FriendlyFlydosStrings.UI.FactorySideScreen.TargetTooltip,
+                TextStyle = PUITuning.Fonts.UIDarkStyle,
+                TextAlignment = TextAnchor.MiddleLeft,
+                FlexSize = new Vector2(1f, 0f)
             });
             panel.AddChild(
                 new PTextField("TargetCount")
@@ -61,14 +69,17 @@ namespace OniFriendlyFlydos
                 }.SetKleiBlueStyle()
                     .SetMinWidthInCharacters(4)
                     .AddOnRealize(realized => targetField = realized));
-            panel.AddChild(
-                new PCheckBox("AvoidWater")
-                {
-                    Text = FriendlyFlydosStrings.UI.FactorySideScreen.AvoidWater,
-                    ToolTip = FriendlyFlydosStrings.UI.FactorySideScreen.AvoidWaterTooltip,
-                    CheckSize = new Vector2(20f, 20f),
-                    OnChecked = OnAvoidWaterChanged
-                }.SetKleiPinkStyle().AddOnRealize(realized => avoidWaterCheckbox = realized));
+            var avoidWater = new PCheckBox("AvoidWater")
+            {
+                Text = FriendlyFlydosStrings.UI.FactorySideScreen.AvoidWater,
+                ToolTip = FriendlyFlydosStrings.UI.FactorySideScreen.AvoidWaterTooltip,
+                CheckSize = new Vector2(20f, 20f),
+                FlexSize = new Vector2(1f, 0f),
+                TextAlignment = TextAnchor.MiddleLeft,
+                OnChecked = OnAvoidWaterChanged
+            }.SetKleiPinkStyle();
+            avoidWater.TextStyle = PUITuning.Fonts.UIDarkStyle;
+            panel.AddChild(avoidWater.AddOnRealize(realized => avoidWaterCheckbox = realized));
             panel.AddChild(new PLabel("Status")
             {
                 Text = string.Format(
@@ -77,7 +88,10 @@ namespace OniFriendlyFlydos
                     0,
                     0,
                     0,
-                    0)
+                    0),
+                TextStyle = PUITuning.Fonts.UIDarkStyle,
+                TextAlignment = TextAnchor.UpperLeft,
+                FlexSize = new Vector2(1f, 0f)
             }.AddOnRealize(realized => statusLabel = realized.GetComponentInChildren<LocText>()));
 
             ContentContainer = panel.AddTo(gameObject, 0);
