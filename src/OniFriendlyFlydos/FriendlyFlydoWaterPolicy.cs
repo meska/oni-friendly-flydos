@@ -59,11 +59,6 @@ namespace OniFriendlyFlydos
             // Navigator sceglie la griglia in OnPrefabInit; qui la riallineiamo anche sui save.
             navigator.NavGridName = gridName;
             NavigatorGrid(navigator) = navGrid;
-            navigator.PathGrid = new PathGrid(
-                Grid.WidthInCells,
-                Grid.HeightInCells,
-                apply_offset: false,
-                navGrid.ValidNavTypes);
             navigator.SetCurrentNavType(NavType.Hover);
         }
     }

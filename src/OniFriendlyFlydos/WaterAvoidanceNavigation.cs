@@ -40,11 +40,17 @@ namespace OniFriendlyFlydos
             var navGrid = new NavGrid(
                 GridId,
                 transitions.ToArray(),
+                // Tenimo i do tipi vanilla: l'AsyncPathProber classifica i pool anca dal conteggio.
                 new[]
                 {
                     new NavGrid.NavTypeData
                     {
                         navType = NavType.Hover,
+                        idleAnim = "idle_loop"
+                    },
+                    new NavGrid.NavTypeData
+                    {
+                        navType = NavType.Swim,
                         idleAnim = "idle_loop"
                     }
                 },
@@ -54,7 +60,8 @@ namespace OniFriendlyFlydos
                     new GameNavGrids.FlyingValidator(
                         exclude_floor: false,
                         exclude_jet_suit_blockers: false,
-                        allow_door_traversal: true)
+                        allow_door_traversal: true),
+                    new GameNavGrids.SwimValidator(requireSubstantialLiquidAbove: true)
                 },
                 2,
                 2,
