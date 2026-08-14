@@ -22,6 +22,11 @@ namespace OniFriendlyFlydos
                 HoverTransition(0, -1, 3, "hover_hover_1_0", System.Array.Empty<CellOffset>())
             };
 
+            foreach (var move in WaterEscapePolicy.CreateMoves())
+            {
+                transitions.Add(SwimTransition(move));
+            }
+
             // Specia el xe positivo, zontemo anca el percorso verso sinistra.
             for (var index = transitions.Count - 1; index >= 0; index--)
             {
@@ -87,6 +92,38 @@ namespace OniFriendlyFlydos
                 is_escape: true,
                 cost,
                 animation,
+                voidOffsets,
+                System.Array.Empty<CellOffset>(),
+                System.Array.Empty<NavOffset>(),
+                System.Array.Empty<NavOffset>(),
+                critter: true);
+        }
+
+        private static NavGrid.Transition SwimTransition(WaterEscapeMove move)
+        {
+            var destination = move.Kind == WaterEscapeMoveKind.ExitWater
+                ? NavType.Hover
+                : NavType.Swim;
+            var voidOffsets = System.Array.Empty<CellOffset>();
+            if (move.X != 0)
+            {
+                voidOffsets = move.Y < 0
+                    ? new[] { new CellOffset(move.X, 0), new CellOffset(0, -1) }
+                    : new[] { new CellOffset(move.X, 0) };
+            }
+
+            // No ghe xe Hover->Swim: ste mosse serve solo a un Flydo za finìo in acqua.
+            return new NavGrid.Transition(
+                NavType.Swim,
+                destination,
+                move.X,
+                move.Y,
+                NavAxis.NA,
+                is_looping: true,
+                loop_has_pre: true,
+                is_escape: true,
+                move.Cost,
+                "swim_swim_1_0",
                 voidOffsets,
                 System.Array.Empty<CellOffset>(),
                 System.Array.Empty<NavOffset>(),

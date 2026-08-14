@@ -15,7 +15,7 @@ Atomic power banks are excluded from automatic selection by default. The mod opt
 
 Automatic production is coordinated per asteroid. The highest target among participating Soldering Stations is the effective shared target. While participation is enabled, the mod owns that station's Flydo recipe queues and may replace or clear manual Flydo orders; disable participation before managing those queues manually.
 
-Water avoidance is stored per Flydo. The producing station's checkbox sets the policy for new Flydos, while Flydos from older Friendly Flydos saves keep water avoidance enabled for compatibility.
+Water avoidance is stored per Flydo. The producing station's checkbox sets the policy for new Flydos, while Flydos from older Friendly Flydos saves keep water avoidance enabled for compatibility. Water-avoiding Flydos do not plan routes into liquid, but can still swim to safety if they are pushed or spawned underwater.
 
 ## Building
 

@@ -19,5 +19,6 @@
     <Compile Include="../../src/OniFriendlyFlydos/BatteryPolicy.cs" Link="BatteryPolicy.cs" />
     <Compile Include="../../src/OniFriendlyFlydos/CheckboxPolicy.cs" Link="CheckboxPolicy.cs" />
     <Compile Include="../../src/OniFriendlyFlydos/ProductionPolicy.cs" Link="ProductionPolicy.cs" />
+    <Compile Include="../../src/OniFriendlyFlydos/WaterEscapePolicy.cs" Link="WaterEscapePolicy.cs" />
   </ItemGroup>
 </Project>
