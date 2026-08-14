@@ -1,0 +1,23 @@
+# Friendly Flydos
+
+Friendly Flydos removes the repetitive setup around ONI's Flydo robots while preserving the game's normal chores and priorities.
+
+## Features
+
+- Automatically selects safe rechargeable and raw-metal power banks on new Flydos.
+- Gives each Flydo a visible battery-delivery priority, defaulting to 7.
+- Adds a Soldering Station side screen that maintains a colony-wide minimum number of active Flydos.
+- Coordinates multiple enabled stations so they do not all reserve materials for the same deficit.
+- Uses a Flydo-only navigation grid that excludes swimming paths and prevents drowning as a safety fallback.
+- Adds Flydos to Industrial Products in the resource list, where a pinned row can cycle through and focus every active Flydo.
+
+Atomic power banks are excluded from automatic selection by default. The mod options can include them when desired.
+
+## Building
+
+The project targets .NET Framework 4.8 and references the local Oxygen Not Included managed assemblies.
+
+```sh
+dotnet test
+dotnet build src/OniFriendlyFlydos/OniFriendlyFlydos.csproj -c Release
+```

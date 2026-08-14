@@ -1,0 +1,63 @@
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using PeterHan.PLib.Options;
+
+namespace OniFriendlyFlydos
+{
+    [ConfigFile(IndentOutput: true, SharedConfigLocation: true)]
+    [ModInfo("https://github.com/meska/oni-friendly-flydos")]
+    public sealed class FriendlyFlydosConfig : IOptions
+    {
+        [Option(
+            "Automatically select power banks",
+            "New Flydos accept rechargeable and raw-metal power banks immediately.",
+            "Flydo defaults")]
+        [JsonProperty]
+        public bool AutoSelectPowerBanks { get; set; } = true;
+
+        [Option(
+            "Include atomic power banks",
+            "Also permits uranium and self-charging power banks. Disabled by default because they can irradiate or eventually destroy a Flydo.",
+            "Flydo defaults")]
+        [JsonProperty]
+        public bool IncludeAtomicPowerBanks { get; set; }
+
+        [Option(
+            "Battery delivery priority",
+            "Priority assigned to the power-bank delivery chore on a new Flydo.",
+            "Flydo defaults")]
+        [Limit(1, 9, 1)]
+        [JsonProperty]
+        public int BatteryDeliveryPriority { get; set; } = 7;
+
+        [Option(
+            "Avoid water",
+            "Uses a Flydo-only navigation grid with no swimming routes. A waterproof safety net also prevents drowning if a Flydo starts inside liquid.",
+            "Navigation")]
+        [JsonProperty]
+        public bool AvoidWater { get; set; } = true;
+
+        public IEnumerable<IOptionsEntry> CreateOptions()
+        {
+            // Nessuna riga custom: POptions genera tuto dai attributi qua sora.
+            return null;
+        }
+
+        public void OnOptionsChanged()
+        {
+            // I default nuovi vale subito; la griglia acqua richiede un riavvio del zogo.
+            FriendlyFlydosSettings.Configure(this);
+        }
+    }
+
+    internal static class FriendlyFlydosSettings
+    {
+        internal static FriendlyFlydosConfig Current { get; private set; }
+            = new FriendlyFlydosConfig();
+
+        internal static void Configure(FriendlyFlydosConfig config)
+        {
+            Current = config ?? new FriendlyFlydosConfig();
+        }
+    }
+}
