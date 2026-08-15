@@ -51,6 +51,10 @@ namespace OniFriendlyFlydos
         {
             FriendlyFlydoDefaults.Apply(__instance.gameObject);
             FriendlyFlydoWaterPolicy.ApplySaved(__instance.gameObject);
+
+            var world = ClusterManager.Instance?.GetWorld(__instance.gameObject.GetMyWorldId());
+            // I Flydo attivi no passa sempre da OnAddedFetchable durante el caricamento del save.
+            FlydoResourceInventory.Track(world?.worldInventory, __instance.gameObject);
         }
     }
 

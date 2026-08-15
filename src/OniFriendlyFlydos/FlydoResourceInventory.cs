@@ -14,7 +14,8 @@ namespace OniFriendlyFlydos
         {
             var prefabId = candidate?.GetComponent<KPrefabID>();
             var pickupable = candidate?.GetComponent<Pickupable>();
-            if (prefabId == null
+            if (worldInventory == null
+                || prefabId == null
                 || pickupable == null
                 || prefabId.PrefabTag != FetchDroneConfig.ID.ToTag()
                 || pickupable.GetMyWorldId() != worldInventory.gameObject.GetMyWorldId())
