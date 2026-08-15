@@ -34,6 +34,21 @@ namespace OniFriendlyFlydos
             DiscoveredResources.Instance?.Discover(prefabId.PrefabTag, GameTags.IndustrialProduct);
         }
 
+        internal static void OverrideFlydoCount(
+            WorldInventory worldInventory,
+            Tag resource,
+            ref float amount)
+        {
+            if (worldInventory == null || resource != FetchDroneConfig.ID.ToTag())
+            {
+                return;
+            }
+
+            // GetAmount pesa i fetchable; un Flydo vivo pesa zero, qua ghe demo unità vere.
+            amount = FriendlyFlydoFactoryController.CountLiveFlydos(
+                worldInventory.gameObject.GetMyWorldId());
+        }
+
         private static void Add(
             IDictionary<Tag, HashSet<Pickupable>> inventory,
             Tag tag,

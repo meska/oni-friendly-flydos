@@ -221,7 +221,7 @@ namespace OniFriendlyFlydos
                 ?? recipes[0];
         }
 
-        private static int CountLiveFlydos(int worldId)
+        internal static int CountLiveFlydos(int worldId)
         {
             var count = 0;
             foreach (var brain in Components.Brains.GetWorldItems(worldId))

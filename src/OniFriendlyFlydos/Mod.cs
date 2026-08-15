@@ -119,4 +119,22 @@ namespace OniFriendlyFlydos
                 GameTags.IndustrialProduct);
         }
     }
+
+    [HarmonyPatch(typeof(WorldInventory), nameof(WorldInventory.GetAmount), typeof(Tag), typeof(bool))]
+    internal static class WorldInventoryGetAmountPatch
+    {
+        private static void Postfix(WorldInventory __instance, Tag __0, ref float __result)
+        {
+            FlydoResourceInventory.OverrideFlydoCount(__instance, __0, ref __result);
+        }
+    }
+
+    [HarmonyPatch(typeof(WorldInventory), nameof(WorldInventory.GetTotalAmount), typeof(Tag), typeof(bool))]
+    internal static class WorldInventoryGetTotalAmountPatch
+    {
+        private static void Postfix(WorldInventory __instance, Tag __0, ref float __result)
+        {
+            FlydoResourceInventory.OverrideFlydoCount(__instance, __0, ref __result);
+        }
+    }
 }
