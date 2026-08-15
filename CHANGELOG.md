@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.9
+
+- Fix the resource inventory count by using `WorldInventory.worldId` instead of the global inventory GameObject world.
+
 ## Unreleased
 
 ### Changed

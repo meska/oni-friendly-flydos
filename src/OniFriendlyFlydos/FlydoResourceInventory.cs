@@ -10,15 +10,21 @@ namespace OniFriendlyFlydos
             Inventory = AccessTools.FieldRefAccess<WorldInventory, Dictionary<Tag, HashSet<Pickupable>>>(
                 "Inventory");
 
+        private static readonly AccessTools.FieldRef<WorldInventory, WorldContainer>
+            WorldContainer = AccessTools.FieldRefAccess<WorldInventory, WorldContainer>(
+                "m_worldContainer");
+
         internal static void Track(WorldInventory worldInventory, GameObject candidate)
         {
             var prefabId = candidate?.GetComponent<KPrefabID>();
             var pickupable = candidate?.GetComponent<Pickupable>();
+            var world = worldInventory == null ? null : WorldContainer(worldInventory);
             if (worldInventory == null
+                || world == null
                 || prefabId == null
                 || pickupable == null
                 || prefabId.PrefabTag != FetchDroneConfig.ID.ToTag()
-                || pickupable.GetMyWorldId() != worldInventory.gameObject.GetMyWorldId())
+                || pickupable.GetMyWorldId() != world.id)
             {
                 return;
             }
@@ -39,14 +45,14 @@ namespace OniFriendlyFlydos
             Tag resource,
             ref float amount)
         {
-            if (worldInventory == null || resource != FetchDroneConfig.ID.ToTag())
+            var world = worldInventory == null ? null : WorldContainer(worldInventory);
+            if (world == null || resource != FetchDroneConfig.ID.ToTag())
             {
                 return;
             }
 
             // GetAmount pesa i fetchable; un Flydo vivo pesa zero, qua ghe demo unità vere.
-            amount = FriendlyFlydoFactoryController.CountLiveFlydos(
-                worldInventory.gameObject.GetMyWorldId());
+            amount = FriendlyFlydoFactoryController.CountLiveFlydos(world.id);
         }
 
         private static void Add(
