@@ -18,7 +18,7 @@ Automatic production is coordinated per asteroid. The highest target among parti
 
 Water avoidance is stored per Flydo. The producing station's checkbox sets the policy for new Flydos, while Flydos from older Friendly Flydos saves keep water avoidance enabled for compatibility. Water-avoiding Flydos do not plan routes into liquid, but can still swim to safety if they are pushed or spawned underwater.
 
-Submerged Flydos can be marked for capture and carried to safety by a duplicant. Capture is disabled again once the Flydo reaches dry ground; this rescue path does not make Flydos eligible for storage compactors.
+Submerged Flydos can be marked for capture. Once captured, select the bagged Flydo and use Move To so a duplicant carries it to a dry cell. Capture is disabled again once the Flydo reaches dry ground; this rescue path does not make Flydos eligible for storage compactors.
 
 ## Building
 

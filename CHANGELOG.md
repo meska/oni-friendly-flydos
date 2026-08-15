@@ -2,7 +2,7 @@
 
 ## 0.2.11
 
-- Allow duplicants to capture and recover living Flydos while they are submerged.
+- Allow duplicants to capture living Flydos while they are submerged, then carry the bagged robot to a chosen dry cell.
 - Remove pending capture orders after a Flydo reaches dry ground, without making Flydos storable resources.
 
 ## 0.2.10

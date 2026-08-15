@@ -6,5 +6,13 @@ namespace OniFriendlyFlydos
         {
             return isSubstantialLiquid && !isDead;
         }
+
+        internal static bool ShouldAllowDuplicantMove(
+            bool vanillaAllowsMove,
+            bool isFlydo,
+            bool isBagged)
+        {
+            return vanillaAllowsMove || (isFlydo && isBagged);
+        }
     }
 }

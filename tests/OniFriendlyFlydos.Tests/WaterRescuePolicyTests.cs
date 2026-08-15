@@ -20,4 +20,23 @@ public sealed class WaterRescuePolicyTests
     {
         Assert.False(WaterRescuePolicy.ShouldAllowCapture(isSubstantialLiquid, isDead));
     }
+
+    [Theory]
+    [InlineData(true, false, false, true)]
+    [InlineData(false, true, true, true)]
+    [InlineData(false, true, false, false)]
+    [InlineData(false, false, true, false)]
+    public void AllowsDuplicantMoveForVanillaTargetsOrBaggedFlydos(
+        bool vanillaAllowsMove,
+        bool isFlydo,
+        bool isBagged,
+        bool expected)
+    {
+        Assert.Equal(
+            expected,
+            WaterRescuePolicy.ShouldAllowDuplicantMove(
+                vanillaAllowsMove,
+                isFlydo,
+                isBagged));
+    }
 }

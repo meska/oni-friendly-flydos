@@ -61,6 +61,20 @@ namespace OniFriendlyFlydos
         }
     }
 
+    [HarmonyPatch(typeof(Movable), "HasTagRequiredToMove")]
+    internal static class MovableHasTagRequiredToMovePatch
+    {
+        private static void Postfix(Movable __instance, ref bool __result)
+        {
+            var isFlydo = __instance.GetComponent<KPrefabID>()?.PrefabTag
+                == FetchDroneConfig.ID.ToTag();
+            __result = WaterRescuePolicy.ShouldAllowDuplicantMove(
+                __result,
+                isFlydo,
+                __instance.gameObject.HasTag(GameTags.Creatures.Bagged));
+        }
+    }
+
     [HarmonyPatch(typeof(FetchDrone), "OnSpawn")]
     internal static class FetchDroneOnSpawnPatch
     {
