@@ -38,6 +38,7 @@ namespace OniFriendlyFlydos
         private static void Postfix(GameObject __result)
         {
             __result.AddOrGet<FriendlyFlydoState>();
+            __result.AddOrGet<FriendlyFlydoWaterRecovery>();
             __result.AddOrGet<Prioritizable>();
             __result.AddTag(GameTags.IndustrialProduct);
         }

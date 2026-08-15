@@ -43,6 +43,7 @@ namespace OniFriendlyFlydos
             }
 
             var navigator = flydo.GetComponent<Navigator>();
+            var recovery = flydo.AddOrGet<FriendlyFlydoWaterRecovery>();
             var pathfinding = Pathfinding.Instance;
             if (navigator == null || pathfinding == null)
             {
@@ -51,15 +52,19 @@ namespace OniFriendlyFlydos
 
             var gridName = avoidWater ? WaterAvoidanceNavigation.GridId : VanillaGridId;
             var navGrid = pathfinding.GetNavGrid(gridName);
-            if (navGrid == null || navigator.NavGridName == gridName)
+            if (navGrid == null)
             {
                 return;
             }
 
-            // Navigator sceglie la griglia in OnPrefabInit; qui la riallineiamo anche sui save.
-            navigator.NavGridName = gridName;
-            NavigatorGrid(navigator) = navGrid;
-            navigator.SetCurrentNavType(NavType.Hover);
+            if (navigator.NavGridName != gridName)
+            {
+                // Navigator sceglie la griglia in OnPrefabInit; qui la riallineiamo anche sui save.
+                navigator.NavGridName = gridName;
+                NavigatorGrid(navigator) = navGrid;
+            }
+
+            recovery.RefreshNavigation();
         }
     }
 }

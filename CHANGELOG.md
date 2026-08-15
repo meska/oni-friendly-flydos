@@ -9,6 +9,7 @@
 
 ### Fixed
 
+- Re-probe submerged water-avoiding Flydos and switch them to swim navigation, including after loading a save or becoming trapped by a changed cell.
 - Let water-avoiding Flydos swim toward dry cells when they are already submerged, without allowing dry Flydos to plan routes into water.
 - Corrected PLib checkbox callbacks so station options actually toggle, and shortened the status rows so the custom panel no longer widens the vanilla tabs.
 - Made the Soldering Station labels visible on its light background and expanded checkbox rows to a reliable clickable width.
