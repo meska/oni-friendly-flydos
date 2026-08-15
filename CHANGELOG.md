@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.11
+
+- Allow duplicants to capture and recover living Flydos while they are submerged.
+- Remove pending capture orders after a Flydo reaches dry ground, without making Flydos storable resources.
+
 ## 0.2.10
 
 - Keep Flydos visible under Industrial Products without making storage compactors collect them.

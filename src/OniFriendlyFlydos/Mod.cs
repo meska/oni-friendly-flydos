@@ -37,9 +37,27 @@ namespace OniFriendlyFlydos
     {
         private static void Postfix(GameObject __result)
         {
+            var prefabId = __result.GetComponent<KPrefabID>();
+            prefabId.AddTag(GameTags.BagableCreature, false);
+            __result.AddOrGet<Baggable>();
+            __result.AddOrGet<Capturable>().allowCapture = false;
+            __result.AddOrGet<FriendlyFlydoWaterRescue>();
             __result.AddOrGet<FriendlyFlydoState>();
             __result.AddOrGet<FriendlyFlydoWaterRecovery>();
             __result.AddOrGet<Prioritizable>();
+        }
+    }
+
+    [HarmonyPatch(typeof(Baggable), nameof(Baggable.GetBaggedAnimName))]
+    internal static class BaggableGetBaggedAnimNamePatch
+    {
+        private static void Postfix(GameObject baggableObject, ref string __result)
+        {
+            if (baggableObject?.GetComponent<KPrefabID>()?.PrefabTag == FetchDroneConfig.ID.ToTag())
+            {
+                // El Flydo no ga "trussed": idle_dead xe l'animazione vanilla più adatta al recupero.
+                __result = "idle_dead";
+            }
         }
     }
 
