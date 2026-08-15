@@ -107,4 +107,16 @@ namespace OniFriendlyFlydos
             FlydoResourceInventory.Track(__instance, data as GameObject);
         }
     }
+
+    [HarmonyPatch(typeof(AllResourcesScreen), "Populate")]
+    internal static class AllResourcesScreenPopulatePatch
+    {
+        private static void Prefix()
+        {
+            // Populate legge le categorie prima che i Flydo del save possa far OnSpawn.
+            DiscoveredResources.Instance?.Discover(
+                FetchDroneConfig.ID.ToTag(),
+                GameTags.IndustrialProduct);
+        }
+    }
 }

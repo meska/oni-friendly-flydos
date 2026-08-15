@@ -9,6 +9,7 @@
 
 ### Fixed
 
+- Populate the Flydo resource row before the All Resources screen builds its Industrial Products entries.
 - Register Flydos loaded from existing saves directly with their world's resource inventory.
 - Re-probe submerged water-avoiding Flydos and switch them to swim navigation, including after loading a save or becoming trapped by a changed cell.
 - Let water-avoiding Flydos swim toward dry cells when they are already submerged, without allowing dry Flydos to plan routes into water.
