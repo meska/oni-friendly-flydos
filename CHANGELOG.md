@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.10
+
+- Keep Flydos visible under Industrial Products without making storage compactors collect them.
+- Release Flydos that earlier mod versions already placed inside storage when loading a colony.
+
 ## 0.2.9
 
 - Fix the resource inventory count by using `WorldInventory.worldId` instead of the global inventory GameObject world.

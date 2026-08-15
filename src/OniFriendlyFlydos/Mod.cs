@@ -40,7 +40,6 @@ namespace OniFriendlyFlydos
             __result.AddOrGet<FriendlyFlydoState>();
             __result.AddOrGet<FriendlyFlydoWaterRecovery>();
             __result.AddOrGet<Prioritizable>();
-            __result.AddTag(GameTags.IndustrialProduct);
         }
     }
 
@@ -49,12 +48,31 @@ namespace OniFriendlyFlydos
     {
         private static void Postfix(FetchDrone __instance)
         {
+            // La categoria Risorse no deve trasformar el robot in merce da compattatore.
+            __instance.GetComponent<KPrefabID>()?.RemoveTag(GameTags.IndustrialProduct);
             FriendlyFlydoDefaults.Apply(__instance.gameObject);
             FriendlyFlydoWaterPolicy.ApplySaved(__instance.gameObject);
 
             var world = ClusterManager.Instance?.GetWorld(__instance.gameObject.GetMyWorldId());
             // I Flydo attivi no passa sempre da OnAddedFetchable durante el caricamento del save.
             FlydoResourceInventory.Track(world?.worldInventory, __instance.gameObject);
+        }
+    }
+
+    [HarmonyPatch(typeof(Storage), "OnSpawn")]
+    internal static class StorageOnSpawnPatch
+    {
+        private static void Postfix(Storage __instance)
+        {
+            for (var index = __instance.items.Count - 1; index >= 0; index--)
+            {
+                var stored = __instance.items[index];
+                if (stored?.GetComponent<KPrefabID>()?.PrefabTag == FetchDroneConfig.ID.ToTag())
+                {
+                    // I save 0.2.6-0.2.9 pol contener Flydo già insacadi: liberemoli al caricamento.
+                    __instance.Drop(stored, false);
+                }
+            }
         }
     }
 
