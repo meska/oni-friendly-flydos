@@ -8,7 +8,6 @@ namespace OniFriendlyFlydos
     public sealed class FriendlyFlydoFactorySideScreen : SideScreenContent, ISim1000ms
     {
         private GameObject enabledCheckbox;
-        private GameObject avoidWaterCheckbox;
         private GameObject targetField;
         private LocText statusLabel;
         private FriendlyFlydoFactoryController controller;
@@ -69,17 +68,6 @@ namespace OniFriendlyFlydos
                 }.SetKleiBlueStyle()
                     .SetMinWidthInCharacters(4)
                     .AddOnRealize(realized => targetField = realized));
-            var avoidWater = new PCheckBox("AvoidWater")
-            {
-                Text = FriendlyFlydosStrings.UI.FactorySideScreen.AvoidWater,
-                ToolTip = FriendlyFlydosStrings.UI.FactorySideScreen.AvoidWaterTooltip,
-                CheckSize = new Vector2(20f, 20f),
-                FlexSize = new Vector2(1f, 0f),
-                TextAlignment = TextAnchor.MiddleLeft,
-                OnChecked = OnAvoidWaterChanged
-            }.SetKleiPinkStyle();
-            avoidWater.TextStyle = PUITuning.Fonts.UIDarkStyle;
-            panel.AddChild(avoidWater.AddOnRealize(realized => avoidWaterCheckbox = realized));
             panel.AddChild(new PLabel("Status")
             {
                 Text = string.Format(
@@ -150,20 +138,10 @@ namespace OniFriendlyFlydos
             }
         }
 
-        private void OnAvoidWaterChanged(GameObject _, int checkState)
-        {
-            if (!refreshing)
-            {
-                controller?.SetAvoidWater(CheckboxPolicy.GetValueAfterClick(checkState));
-                Refresh();
-            }
-        }
-
         private void Refresh()
         {
             if (controller == null
                 || enabledCheckbox == null
-                || avoidWaterCheckbox == null
                 || targetField == null)
             {
                 return;
@@ -173,11 +151,6 @@ namespace OniFriendlyFlydos
             PCheckBox.SetCheckState(
                 enabledCheckbox,
                 controller.Enabled
-                    ? PCheckBox.STATE_CHECKED
-                    : PCheckBox.STATE_UNCHECKED);
-            PCheckBox.SetCheckState(
-                avoidWaterCheckbox,
-                controller.AvoidWater
                     ? PCheckBox.STATE_CHECKED
                     : PCheckBox.STATE_UNCHECKED);
             targetField.GetComponent<TMP_InputField>()?.SetTextWithoutNotify(

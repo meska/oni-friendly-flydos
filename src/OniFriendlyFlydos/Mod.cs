@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using HarmonyLib;
 using KMod;
 using PeterHan.PLib.Core;
@@ -22,41 +22,19 @@ namespace OniFriendlyFlydos
         }
     }
 
-    [HarmonyPatch(typeof(GameNavGrids), MethodType.Constructor, typeof(Pathfinding))]
-    internal static class GameNavGridsConstructorPatch
-    {
-        private static void Postfix(Pathfinding pathfinding)
-        {
-            // La griglia resta disponibile: ogni stazion decide chi che la usa.
-            WaterAvoidanceNavigation.Register(pathfinding);
-        }
-    }
-
     [HarmonyPatch(typeof(FetchDroneConfig), nameof(FetchDroneConfig.CreatePrefab))]
     internal static class FetchDroneConfigCreatePrefabPatch
     {
         private static void Postfix(GameObject __result)
         {
-            var prefabId = __result.GetComponent<KPrefabID>();
-            prefabId.AddTag(GameTags.BagableCreature, false);
-            __result.AddOrGet<Baggable>();
-            __result.AddOrGet<Capturable>().allowCapture = false;
             __result.AddOrGet<FriendlyFlydoWaterRescue>();
             __result.AddOrGet<FriendlyFlydoState>();
-            __result.AddOrGet<FriendlyFlydoWaterRecovery>();
             __result.AddOrGet<Prioritizable>();
-        }
-    }
-
-    [HarmonyPatch(typeof(Baggable), nameof(Baggable.GetBaggedAnimName))]
-    internal static class BaggableGetBaggedAnimNamePatch
-    {
-        private static void Postfix(GameObject baggableObject, ref string __result)
-        {
-            if (baggableObject?.GetComponent<KPrefabID>()?.PrefabTag == FetchDroneConfig.ID.ToTag())
+            var drowning = __result.GetComponent<DrowningMonitor>();
+            if (drowning != null)
             {
-                // El Flydo no ga "trussed": idle_dead xe l'animazione vanilla più adatta al recupero.
-                __result = "idle_dead";
+                // El soccorso pol tardar, ma el Flydo no deve morir mentre speta un duplicante.
+                drowning.canDrownToDeath = false;
             }
         }
     }
@@ -68,10 +46,66 @@ namespace OniFriendlyFlydos
         {
             var isFlydo = __instance.GetComponent<KPrefabID>()?.PrefabTag
                 == FetchDroneConfig.ID.ToTag();
+            var rescue = __instance.GetComponent<FriendlyFlydoWaterRescue>();
             __result = WaterRescuePolicy.ShouldAllowDuplicantMove(
                 __result,
                 isFlydo,
-                __instance.gameObject.HasTag(GameTags.Creatures.Bagged));
+                rescue != null && rescue.RescueRequested);
+        }
+    }
+
+    [HarmonyPatch(
+        typeof(MovePickupableChore),
+        MethodType.Constructor,
+        typeof(IStateMachineTarget),
+        typeof(GameObject),
+        typeof(Action<Chore>))]
+    internal static class MovePickupableChoreConstructorPatch
+    {
+        private static readonly Chore.Precondition DuplicantOnly = new Chore.Precondition
+        {
+            id = "FriendlyFlydoRescueDuplicantOnly",
+            description = "Only duplicants rescue submerged Flydos",
+            fn = delegate(ref Chore.Precondition.Context context, object _)
+            {
+                return context.consumerState.resume != null;
+            },
+            canExecuteOnAnyThread = true
+        };
+
+        private static void Postfix(MovePickupableChore __instance, GameObject pickupable)
+        {
+            var rescue = pickupable?.GetComponent<FriendlyFlydoWaterRescue>();
+            if (rescue != null && rescue.RescueRequested)
+            {
+                __instance.AddPrecondition(DuplicantOnly, null);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(FetchDroneConfig), nameof(FetchDroneConfig.OnSpawn))]
+    internal static class FetchDroneConfigOnSpawnPatch
+    {
+        private static void Postfix(GameObject inst)
+        {
+            var movable = inst.GetComponent<Movable>();
+            if (movable == null)
+            {
+                return;
+            }
+
+            movable.onDeliveryComplete = go =>
+            {
+                go.GetComponent<FriendlyFlydoWaterRescue>()?.OnDeliveryComplete();
+                if (go.HasTag(GameTags.Robots.Behaviours.NoElectroBank))
+                {
+                    go.GetComponent<KBatchedAnimController>()?.Play(
+                        "dead_battery",
+                        KAnim.PlayMode.Once,
+                        1f,
+                        0f);
+                }
+            };
         }
     }
 
@@ -83,7 +117,6 @@ namespace OniFriendlyFlydos
             // La categoria Risorse no deve trasformar el robot in merce da compattatore.
             __instance.GetComponent<KPrefabID>()?.RemoveTag(GameTags.IndustrialProduct);
             FriendlyFlydoDefaults.Apply(__instance.gameObject);
-            FriendlyFlydoWaterPolicy.ApplySaved(__instance.gameObject);
 
             var world = ClusterManager.Instance?.GetWorld(__instance.gameObject.GetMyWorldId());
             // I Flydo attivi no passa sempre da OnAddedFetchable durante el caricamento del save.
@@ -103,27 +136,6 @@ namespace OniFriendlyFlydos
                 {
                     // I save 0.2.6-0.2.9 pol contener Flydo già insacadi: liberemoli al caricamento.
                     __instance.Drop(stored, false);
-                }
-            }
-        }
-    }
-
-    [HarmonyPatch(typeof(ComplexFabricator), "SpawnOrderProduct")]
-    internal static class ComplexFabricatorSpawnOrderProductPatch
-    {
-        private static void Postfix(ComplexFabricator __instance, List<GameObject> __result)
-        {
-            var controller = __instance.GetComponent<FriendlyFlydoFactoryController>();
-            if (controller == null || __result == null)
-            {
-                return;
-            }
-
-            foreach (var product in __result)
-            {
-                if (product?.GetComponent<KPrefabID>()?.PrefabTag == FetchDroneConfig.ID.ToTag())
-                {
-                    FriendlyFlydoWaterPolicy.Apply(product, controller.AvoidWater);
                 }
             }
         }

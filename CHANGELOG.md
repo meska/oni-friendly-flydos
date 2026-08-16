@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.12
+
+- Remove the custom water-avoidance navigation grid, swim recovery, saved water policy, and station checkbox.
+- Automatically ask a duplicant to carry each submerged living Flydo to the nearest dry reachable cell.
+- Keep submerged Flydos safe from drowning while an automatic rescue is waiting or in progress.
+
 ## 0.2.11
 
 - Allow duplicants to capture living Flydos while they are submerged, then carry the bagged robot to a chosen dry cell.

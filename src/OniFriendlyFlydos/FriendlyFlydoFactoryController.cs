@@ -47,17 +47,12 @@ namespace OniFriendlyFlydos
         [Serialize]
         private int targetCount = 5;
 
-        [Serialize]
-        private bool avoidWater = true;
-
         [MyCmpReq]
         private ComplexFabricator fabricator = null;
 
         public bool Enabled => automaticProductionEnabled;
 
         public int TargetCount => targetCount;
-
-        public bool AvoidWater => avoidWater;
 
         protected override void OnSpawn()
         {
@@ -104,11 +99,6 @@ namespace OniFriendlyFlydos
         {
             targetCount = Mathf.Clamp(value, 0, ComplexFabricator.MAX_QUEUE_SIZE);
             Reconcile(force: true);
-        }
-
-        public void SetAvoidWater(bool value)
-        {
-            avoidWater = value;
         }
 
         internal int GetLiveFlydoCount()
