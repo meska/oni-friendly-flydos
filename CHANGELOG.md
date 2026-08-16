@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.17
+
+- Safely discard destroyed move targets when cancelling rescue markers left by earlier versions.
+
 ## 0.2.16
 
 - Avoid an exception during colony load when a Flydo rescue destination has already been destroyed before cleanup.

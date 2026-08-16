@@ -77,6 +77,24 @@ namespace OniFriendlyFlydos
         }
     }
 
+    [HarmonyPatch(typeof(CancellableMove), nameof(CancellableMove.OnCancel), typeof(Movable))]
+    internal static class CancellableMoveOnCancelPatch
+    {
+        private static void Prefix(CancellableMove __instance)
+        {
+            var movingObjects = __instance.movingObjects;
+            for (var index = movingObjects.Count - 1; index >= 0; index--)
+            {
+                var movableReference = movingObjects[index];
+                if (movableReference == null || movableReference.Get() == null)
+                {
+                    // I veci save pol tener riferimenti Unity distrutti che el vanilla no valida qua.
+                    movingObjects.RemoveAt(index);
+                }
+            }
+        }
+    }
+
     [HarmonyPatch(typeof(FetchDroneConfig), nameof(FetchDroneConfig.OnSpawn))]
     internal static class FetchDroneConfigOnSpawnPatch
     {
