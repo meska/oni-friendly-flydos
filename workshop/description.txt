@@ -13,7 +13,6 @@ Makes Flydos friendlier to operate while preserving ONI's normal chores, priorit
 [*]Shows active Flydos under Industrial Products in the Resources screen without making storage compactors collect them.
 [*]Automatically asks a duplicant to carry a submerged living Flydo to the nearest dry reachable cell.
 [*]Preserves vanilla drowning behavior if no duplicant completes the rescue in time.
-[*]Cleans obsolete rescue markers and safely handles references left by earlier versions.
 [*]Checks the authoritative Steam package directly when ONI's legacy Workshop cache is stale.
 [/list]
 
