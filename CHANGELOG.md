@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.15
+
+- Reuse each Flydo's battery-delivery priority for its automatic rescue errand and keep changes synchronized while the errand is pending.
+
 ## 0.2.14
 
 - Cancel automatic rescue errands when their Flydo is removed, preventing orphaned move orders.

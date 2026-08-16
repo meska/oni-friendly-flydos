@@ -23,8 +23,8 @@ namespace OniFriendlyFlydos
         public bool IncludeAtomicPowerBanks { get; set; }
 
         [Option(
-            "Battery delivery priority",
-            "Priority assigned to the power-bank delivery chore on a new Flydo.",
+            "Flydo chore priority",
+            "Priority assigned to power-bank delivery and emergency rescue chores on a new Flydo.",
             "Flydo defaults")]
         [Limit(1, 9, 1)]
         [JsonProperty]

@@ -5,7 +5,7 @@ Friendly Flydos removes the repetitive setup around ONI's Flydo robots while pre
 ## Features
 
 - Automatically selects safe rechargeable and raw-metal power banks on new Flydos.
-- Gives each Flydo a visible battery-delivery priority, defaulting to 7.
+- Gives each Flydo a visible priority for battery delivery and emergency rescue, defaulting to 7.
 - Adds a Soldering Station side screen that maintains a shared minimum number of living Flydos per asteroid.
 - Coordinates multiple enabled stations so they do not all reserve materials for the same deficit.
 - Automatically asks a duplicant to carry submerged Flydos to the nearest dry reachable cell.

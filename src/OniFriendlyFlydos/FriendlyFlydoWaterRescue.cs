@@ -15,6 +15,9 @@ namespace OniFriendlyFlydos
         [MyCmpGet]
         private Movable movable = null;
 
+        [MyCmpGet]
+        private Prioritizable prioritizable = null;
+
         [Serialize]
         private bool rescueRequested;
 
@@ -22,8 +25,22 @@ namespace OniFriendlyFlydos
 
         internal bool RescueRequested => rescueRequested;
 
+        protected override void OnSpawn()
+        {
+            base.OnSpawn();
+            if (prioritizable != null)
+            {
+                prioritizable.onPriorityChanged += OnPriorityChanged;
+            }
+        }
+
         protected override void OnCleanUp()
         {
+            if (prioritizable != null)
+            {
+                prioritizable.onPriorityChanged -= OnPriorityChanged;
+            }
+
             // Se el Flydo sparisse tra do tick, no lassémo el trasporto orfano in lista.
             CancelAutomaticMove();
             base.OnCleanUp();
@@ -88,6 +105,7 @@ namespace OniFriendlyFlydos
 
             rescueRequested = true;
             movable.MoveToLocation(destination);
+            SyncRescuePriority();
         }
 
         internal void OnDeliveryComplete()
@@ -104,6 +122,21 @@ namespace OniFriendlyFlydos
             }
 
             rescueRequested = false;
+        }
+
+        private void OnPriorityChanged(PrioritySetting _)
+        {
+            SyncRescuePriority();
+        }
+
+        private void SyncRescuePriority()
+        {
+            var destinationPriority = movable?.StorageProxy?.GetComponent<Prioritizable>();
+            if (rescueRequested && prioritizable != null && destinationPriority != null)
+            {
+                // La stessa priorità governa sia la pila sia el recupero d'emergenza.
+                destinationPriority.SetMasterPriority(prioritizable.GetMasterPriority());
+            }
         }
 
         private int FindNearestDryReachableCell(int origin)
