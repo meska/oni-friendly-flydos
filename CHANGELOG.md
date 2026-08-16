@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.0
+
+- Publish Friendly Flydos on Steam Workshop with dedicated preview artwork.
+- Add a built-in Workshop self-updater that validates packages, preserves configuration, and applies updates safely after restart.
+
 ## 0.2.17
 
 - Safely discard destroyed move targets when cancelling rescue markers left by earlier versions.

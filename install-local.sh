@@ -21,6 +21,8 @@ dotnet build "$project_dir/src/OniFriendlyFlydos/OniFriendlyFlydos.csproj" -c Re
 mkdir -p "$mod_dir"
 install_atomically "$project_dir/package/mod.yaml" "$mod_dir/mod.yaml"
 install_atomically "$project_dir/package/mod_info.yaml" "$mod_dir/mod_info.yaml"
+install_atomically "$project_dir/package/preview.png" "$mod_dir/preview.png"
+install_atomically "$project_dir/THIRD_PARTY_NOTICES.md" "$mod_dir/THIRD_PARTY_NOTICES.md"
 install_atomically "$dll_path" "$mod_dir/OniFriendlyFlydos.dll"
 
 echo "Installed Friendly Flydos in: $mod_dir"

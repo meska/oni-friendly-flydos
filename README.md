@@ -1,6 +1,10 @@
 # Friendly Flydos
 
+![Workshop preview](package/preview.png)
+
 Friendly Flydos removes the repetitive setup around ONI's Flydo robots while preserving the game's normal chores and priorities.
+
+[Install Friendly Flydos from the Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3784549730)
 
 ## Features
 
@@ -16,6 +20,10 @@ Atomic power banks are excluded from automatic selection by default. The mod opt
 Automatic production is coordinated per asteroid. The highest target among participating Soldering Stations is the effective shared target. While participation is enabled, the mod owns that station's Flydo recipe queues and may replace or clear manual Flydo orders; disable participation before managing those queues manually.
 
 Friendly Flydos does not replace the vanilla Flydo navigation grid. When a living Flydo is submerged, the mod finds the nearest dry cell reachable by duplicants and creates a normal move chore automatically. Vanilla drowning behavior remains active while the Flydo waits, and the Flydo remains excluded from storage compactors.
+
+## Reliable Workshop updates
+
+The mod checks Steam's authoritative Workshop package from the main menu. If ONI's legacy cache is stale, it downloads and validates the current package, preserves `config.json`, and schedules a safe installation for the next restart.
 
 ## Building
 

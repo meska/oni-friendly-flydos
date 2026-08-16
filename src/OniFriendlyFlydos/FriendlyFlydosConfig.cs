@@ -5,7 +5,7 @@ using PeterHan.PLib.Options;
 namespace OniFriendlyFlydos
 {
     [ConfigFile(IndentOutput: true, SharedConfigLocation: true)]
-    [ModInfo("https://github.com/meska/oni-friendly-flydos")]
+    [ModInfo("https://github.com/meska/oni-friendly-flydos", "preview.png")]
     public sealed class FriendlyFlydosConfig : IOptions
     {
         [Option(

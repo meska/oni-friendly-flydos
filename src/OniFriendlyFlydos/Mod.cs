@@ -10,15 +10,28 @@ namespace OniFriendlyFlydos
 {
     public sealed class Mod : UserMod2
     {
+        internal static KMod.Mod Current { get; private set; }
+
         public override void OnLoad(Harmony harmony)
         {
             base.OnLoad(harmony);
+            Current = mod;
             PUtil.InitLibrary();
             Localization.RegisterForTranslation(typeof(FriendlyFlydosStrings));
             new POptions().RegisterOptions(this, typeof(FriendlyFlydosConfig));
             FriendlyFlydosSettings.Configure(
                 POptions.ReadSettings<FriendlyFlydosConfig>() ?? new FriendlyFlydosConfig());
             Debug.Log("[Friendly Flydos] Mod loaded.");
+        }
+    }
+
+    [HarmonyPatch(typeof(MainMenu), "OnPrefabInit")]
+    internal static class MainMenuOnPrefabInitSelfUpdatePatch
+    {
+        private static void Postfix()
+        {
+            // El menu xe el primo punto dove Steamworks ga finìo de inizializzarse.
+            WorkshopSelfUpdater.Start(Mod.Current);
         }
     }
 

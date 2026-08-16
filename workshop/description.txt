@@ -1,0 +1,26 @@
+[h1]Friendly Flydos[/h1]
+[b]Current version: 1.0.0[/b]
+
+Makes Flydos friendlier to operate while preserving ONI's normal chores, priorities, and drowning behavior.
+
+[b]Features[/b]
+[list]
+[*]Automatically selects safe rechargeable and raw-metal power banks on new Flydos.
+[*]Keeps atomic power banks excluded by default, with an option to include them.
+[*]Gives every Flydo one visible priority shared by battery delivery and emergency rescue.
+[*]Adds a Soldering Station controller that maintains a shared minimum number of living Flydos per asteroid.
+[*]Coordinates multiple participating stations without reserving materials for the same production deficit.
+[*]Shows active Flydos under Industrial Products in the Resources screen without making storage compactors collect them.
+[*]Automatically asks a duplicant to carry a submerged living Flydo to the nearest dry reachable cell.
+[*]Preserves vanilla drowning behavior if no duplicant completes the rescue in time.
+[*]Cleans obsolete rescue markers and safely handles references left by earlier versions.
+[*]Checks the authoritative Steam package directly when ONI's legacy Workshop cache is stale.
+[/list]
+
+[b]Configuration[/b]
+[list]
+[*]Automatic power-bank selection can be disabled.
+[*]Atomic power banks can be included explicitly.
+[*]The default battery-delivery and rescue priority is configurable from 1 to 9.
+[*]Each Soldering Station can join or leave automatic production and choose its target Flydo count.
+[/list]
