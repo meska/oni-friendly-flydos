@@ -36,6 +36,14 @@ namespace OniFriendlyFlydos
             return vanillaAllowsMove || (isFlydo && rescueRequested);
         }
 
+        internal static bool ShouldClearAutomaticMove(
+            bool rescueRequested,
+            bool isMarkedForMove,
+            bool hasStorageProxy)
+        {
+            return rescueRequested && isMarkedForMove && hasStorageProxy;
+        }
+
         internal static RescueOffset[] CreateSearchOffsets(int maxRadius)
         {
             if (maxRadius <= 0)

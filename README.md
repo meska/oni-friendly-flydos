@@ -15,7 +15,7 @@ Atomic power banks are excluded from automatic selection by default. The mod opt
 
 Automatic production is coordinated per asteroid. The highest target among participating Soldering Stations is the effective shared target. While participation is enabled, the mod owns that station's Flydo recipe queues and may replace or clear manual Flydo orders; disable participation before managing those queues manually.
 
-Friendly Flydos does not replace the vanilla Flydo navigation grid. When a living Flydo is submerged, the mod finds the nearest dry cell reachable by duplicants and creates a normal move chore automatically. The Flydo cannot drown while waiting and remains excluded from storage compactors.
+Friendly Flydos does not replace the vanilla Flydo navigation grid. When a living Flydo is submerged, the mod finds the nearest dry cell reachable by duplicants and creates a normal move chore automatically. Vanilla drowning behavior remains active while the Flydo waits, and the Flydo remains excluded from storage compactors.
 
 ## Building
 

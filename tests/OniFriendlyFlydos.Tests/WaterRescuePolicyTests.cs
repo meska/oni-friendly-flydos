@@ -47,6 +47,25 @@ public sealed class WaterRescuePolicyTests
                 rescueRequested));
     }
 
+    [Theory]
+    [InlineData(true, true, true, true)]
+    [InlineData(true, true, false, false)]
+    [InlineData(true, false, true, false)]
+    [InlineData(false, true, true, false)]
+    public void ClearsOnlyCompleteAutomaticMoveState(
+        bool rescueRequested,
+        bool isMarkedForMove,
+        bool hasStorageProxy,
+        bool expected)
+    {
+        Assert.Equal(
+            expected,
+            WaterRescuePolicy.ShouldClearAutomaticMove(
+                rescueRequested,
+                isMarkedForMove,
+                hasStorageProxy));
+    }
+
     [Fact]
     public void SearchOffsetsAreNearestFirstUniqueAndBounded()
     {

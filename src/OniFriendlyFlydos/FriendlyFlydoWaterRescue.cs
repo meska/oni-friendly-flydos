@@ -116,7 +116,11 @@ namespace OniFriendlyFlydos
 
         private void CancelAutomaticMove()
         {
-            if (movable != null && rescueRequested && movable.IsMarkedForMove)
+            if (movable != null
+                && WaterRescuePolicy.ShouldClearAutomaticMove(
+                    rescueRequested,
+                    movable.IsMarkedForMove,
+                    movable.StorageProxy != null))
             {
                 movable.ClearMove();
             }

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.16
+
+- Avoid an exception during colony load when a Flydo rescue destination has already been destroyed before cleanup.
+
 ## 0.2.15
 
 - Reuse each Flydo's battery-delivery priority for its automatic rescue errand and keep changes synchronized while the errand is pending.
