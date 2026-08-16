@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.14
+
+- Cancel automatic rescue errands when their Flydo is removed, preventing orphaned move orders.
+
 ## 0.2.13
 
 - Preserve vanilla drowning behavior while a submerged Flydo waits for duplicant rescue.

@@ -22,6 +22,13 @@ namespace OniFriendlyFlydos
 
         internal bool RescueRequested => rescueRequested;
 
+        protected override void OnCleanUp()
+        {
+            // Se el Flydo sparisse tra do tick, no lassémo el trasporto orfano in lista.
+            CancelAutomaticMove();
+            base.OnCleanUp();
+        }
+
         public void Sim1000ms(float dt)
         {
             if (movable == null)
@@ -91,7 +98,7 @@ namespace OniFriendlyFlydos
 
         private void CancelAutomaticMove()
         {
-            if (rescueRequested && movable.IsMarkedForMove)
+            if (movable != null && rescueRequested && movable.IsMarkedForMove)
             {
                 movable.ClearMove();
             }
