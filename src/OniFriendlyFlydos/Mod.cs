@@ -30,12 +30,6 @@ namespace OniFriendlyFlydos
             __result.AddOrGet<FriendlyFlydoWaterRescue>();
             __result.AddOrGet<FriendlyFlydoState>();
             __result.AddOrGet<Prioritizable>();
-            var drowning = __result.GetComponent<DrowningMonitor>();
-            if (drowning != null)
-            {
-                // El soccorso pol tardar, ma el Flydo no deve morir mentre speta un duplicante.
-                drowning.canDrownToDeath = false;
-            }
         }
     }
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.13
+
+- Preserve vanilla drowning behavior while a submerged Flydo waits for duplicant rescue.
+
 ## 0.2.12
 
 - Remove the custom water-avoidance navigation grid, swim recovery, saved water policy, and station checkbox.
